@@ -1,3 +1,4 @@
 export * from './AppLayout';
-export * from './DraggableInfoScreen';
+export * from './DraggableHeader';
+export * from './InfoScreen';
 

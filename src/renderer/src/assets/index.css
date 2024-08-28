@@ -26,8 +26,11 @@
         @apply w-full;
     }
 
-    #draggable-info-screen {
+    #draggable-screen {
         -webkit-app-region: drag;
-
     }
+}
+
+p .control {
+    @apply text-red-500;
 }
