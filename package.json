@@ -23,6 +23,9 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
+    "@mdxeditor/editor": "^3.11.2",
+    "@tailwindcss/typography": "^0.5.15",
+    "jotai": "^2.9.3",
     "robotjs": "^0.6.0"
   },
   "devDependencies": {

@@ -23,9 +23,9 @@ export default defineConfig({
         '@shared': resolve('scr/shared'),
         '@/hooks': resolve('src/renderer/src/hooks'),
         '@/assets': resolve('src/renderer/src/assets'),
-        '@/store': resolve('src/renderer/store'),
+        '@/store': resolve('src/renderer/src/store'),
         '@/components': resolve('src/renderer/src/components'),
-        '@/mocks': resolve('src/renderer/src/mocks')
+        '@/mocks': resolve('src/renderer/src/store/mocks')
       }
     },
     plugins: [react()]

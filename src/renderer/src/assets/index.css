@@ -15,22 +15,58 @@
         
         @apply bg-black;
 
-        @apply font-sans antialiased text-white;
+        @apply font-font2 antialiased text-white;
 
         @apply overflow-hidden;
     }
-    
-    .screen {
-        @apply flex;
-        @apply h-full;
-        @apply w-full;
+
+    #draggable-header {
+        -webkit-app-region: drag;
     }
 
-    #draggable-screen {
-        -webkit-app-region: drag;
+    button {
+        -webkit-app-region: no-drag;
+    }
+
+    .second-text {
+        @apply text-gray-400;
+    }
+    
+    .first-text {
+        @apply text-red-500;
     }
 }
 
-p .control {
-    @apply text-red-500;
+
+::-webkit-scrollbar {
+    @apply w-0;
+}
+
+span[contentEditable="true"] {
+    outline: none;
+}
+
+.hover-delay span {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out 0s;
+}
+
+.hover-delay:hover span {
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out 0.4s; /* 0.5s transition with 3s delay */
+}
+
+.fade-out {
+    position: relative;
+    overflow: hidden;
+}
+
+.fade-out::after {
+    content: "";
+    position: absolute;
+    right: 0px;
+    width: 70px;
+    height: 100%; /* Adjust this to control the fade-out height */
+    background: linear-gradient(to right, transparent, rgb(0, 0, 0)); /* Adjust white to match your background */
+    pointer-events: none;
 }

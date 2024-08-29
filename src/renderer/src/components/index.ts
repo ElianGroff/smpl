@@ -1,4 +1,7 @@
 export * from './AppLayout';
-export * from './DraggableHeader';
-export * from './InfoScreen';
+export * from './DraggableTopBar';
+export * from './MarkdownEditer';
+export * from './NotePreview';
+export * from './NotePreviewList';
+export * from './TipPanel';
 

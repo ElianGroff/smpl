@@ -9,17 +9,6 @@ export const RootLayout = ({ children, className, ...props }: ComponentProps<'ma
     )
   }
 
-export const List = ({ className, children, ...props }: ComponentProps<'aside'>) => {
-    return (
-        <aside 
-            className={twMerge('screen w-300px overflow-auto inset-0', className)}
-            {...props}
-        >
-            {children}
-        </aside>
-    )
-}
-
 export const Content = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
     ({ children, className, ...props }, ref) => (
       <div ref={ref} className={twMerge('screen flex-1 overflow-auto', className)} {...props}>
