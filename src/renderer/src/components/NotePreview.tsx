@@ -17,9 +17,9 @@ export const NotePreview = ({
     const date = formatRelativeDateTimeFromMs(lastEditTime)
 
     return <div className={cn(
-        'hover-delay relative group cursor-pointer text-opacity-10 transition-colors w-full duration-75 font-light hover:tracking-widest',
+        'hover-delay relative group cursor-pointer text-nowrap my-4 fade-out font-light hover:tracking-widest',
         {
-            'font-extrabold hover:tracking-normal': isActive,
+            'font-bold hover:tracking-normal': isActive,
             'hover:font-normal hover:tracking-normal': !isActive
         },
         className

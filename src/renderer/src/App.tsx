@@ -1,60 +1,56 @@
-import { Content, DraggableTopBar, MarkdownEditer, NotePreviewList, RootLayout, TipPanel } from '@/components'
+import { Content, DraggableTopBar, MarkdownEditer, NotePreviewList } from '@/components'
 import { atom, useAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 
-export const tipsPanelOnAtom = atom<boolean>(false)
-export const tipsPreviewListAtom = atom<boolean>(false)
+//?export const tipsPanelOnAtom = atom<boolean>(false)
+export const notePreviewListAtom = atom<boolean>(false)
 
 const App = () => {
-  const [tipsPanelOn, setTipsPanelOn] = useAtom(tipsPanelOnAtom)
-  const [tipsPreviewListOn, setTipsPreviewListOn] = useAtom(tipsPreviewListAtom)
+  const [notePreviewListOn, setNotePreviewListOn] = useAtom(notePreviewListAtom)
 
   const contentContainerRef = useRef<HTMLDivElement>(null)
   const resetScroll = () => {
     contentContainerRef.current?.scrollTo(0, 0)
   }
 
-  //todo remove these events when unmounted - export them to other script
   useEffect(() => {
-    window.addEventListener('mousemove', (e:MouseEvent) => {
-      //! todo console.log(e.clientY) SHINK THE TOPBAR SPACE
-      if (e.clientY <= 20) {
-        setTipsPanelOn(true)
-      } else {
-        setTipsPanelOn(false)
-      }
-    })
 
-    window.addEventListener('keydown', (e:KeyboardEvent) => { //todo THIS WHOLE THING is shitty asf
+    function handleKeyDown(e:KeyboardEvent) {
       if (e.altKey) {
-        setTipsPreviewListOn(true)
+        setNotePreviewListOn(true)
       } 
       
       if (e.key === 'Escape') {
         window.close()
       }
-    })
+    }
 
-    window.addEventListener('keyup', (e:KeyboardEvent) => {
+    function handleKeyUp(e:KeyboardEvent) {
       if (e.code === 'AltLeft') {
-        setTipsPreviewListOn(false)
+        setNotePreviewListOn(false)
       } 
       
-    })
+    }
 
+    // Sets event listeners for previewing the note list
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
+
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
 
     }, [])
 
   return (
     <>
-      <DraggableTopBar/>
-      <RootLayout >
-        {tipsPanelOn && <TipPanel/>}
-        <Content ref={contentContainerRef}>
-          <MarkdownEditer />  
-        </Content>
-        {(tipsPreviewListOn && !tipsPanelOn) && <NotePreviewList onSelect={resetScroll} className='h-screen w-screen text-6xl'/>}
-      </RootLayout>
+      <DraggableTopBar className='border-2 border-green-500'/>
+      <Content ref={contentContainerRef}> 
+        <MarkdownEditer />
+      </Content>
+      {notePreviewListOn && <NotePreviewList onSelect={resetScroll} className='w-screen text-5xl'/>}
     </>
   )
 }

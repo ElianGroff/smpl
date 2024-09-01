@@ -24,10 +24,6 @@
         -webkit-app-region: drag;
     }
 
-    button {
-        -webkit-app-region: no-drag;
-    }
-
     .second-text {
         @apply text-gray-400;
     }
@@ -46,26 +42,33 @@ span[contentEditable="true"] {
     outline: none;
 }
 
-.hover-delay span {
+
+.hover-delay {
     opacity: 0;
     transition: opacity 0.5s ease-in-out 0s;
 }
 
-.hover-delay:hover span {
+.hover-delay:hover {
     opacity: 1;
     transition: opacity 0.1s ease-in-out 0.4s; /* 0.5s transition with 3s delay */
 }
 
-.fade-out {
-    position: relative;
-    overflow: hidden;
+.hover-drag  {
+    opacity: 0;
 }
+
+.hover-drag:hover  {
+    opacity: 1;
+}
+
+
+
 
 .fade-out::after {
     content: "";
     position: absolute;
     right: 0px;
-    width: 70px;
+    width: 10px;
     height: 100%; /* Adjust this to control the fade-out height */
     background: linear-gradient(to right, transparent, rgb(0, 0, 0)); /* Adjust white to match your background */
     pointer-events: none;
