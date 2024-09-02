@@ -1,4 +1,4 @@
-import { Content, DraggableTopBar, MarkdownEditer, NotePreviewList } from '@/components'
+import { Content, DraggableTopBar, MarkdownEditer, NotePreviewList, NoteTitle } from '@/components'
 import { atom, useAtom } from 'jotai'
 import { useEffect, useRef } from 'react'
 
@@ -46,11 +46,13 @@ const App = () => {
 
   return (
     <>
-      <DraggableTopBar className='border-2 border-green-500'/>
-      <Content ref={contentContainerRef}> 
-        <MarkdownEditer />
-      </Content>
+      <DraggableTopBar/>
       {notePreviewListOn && <NotePreviewList onSelect={resetScroll} className='w-screen text-5xl'/>}
+      <Content className='ph' ref={contentContainerRef}> 
+        <NoteTitle/>
+        <MarkdownEditer/>
+      </Content>
+      <div className="fixed top-0 left-0 h-full w-full fade-out pointer-events-none"></div>
     </>
   )
 }

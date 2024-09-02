@@ -11,7 +11,7 @@ export const RootLayout = ({ children, className, ...props }: ComponentProps<'ma
 
 export const Content = forwardRef<HTMLDivElement, ComponentProps<'div'>>(
     ({ children, className, ...props }, ref) => (
-      <div ref={ref} className={twMerge('screen flex-1 overflow-auto', className)} {...props}>
+      <div ref={ref} className={twMerge('fixed t-0 h-screen w-full', className)} {...props}>
         {children}
       </div>
     )

@@ -29,7 +29,7 @@
     }
     
     .first-text {
-        @apply text-red-500;
+        @apply text-white;
     }
 }
 
@@ -38,38 +38,33 @@
     @apply w-0;
 }
 
-span[contentEditable="true"] {
-    outline: none;
+.text-editor {
+    @apply bg-black;
+    @apply outline-none;
+    @apply text-white;
+    @apply selection:bg-gray-800;
 }
-
 
 .hover-delay {
     opacity: 0;
-    transition: opacity 0.5s ease-in-out 0s;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.hover-delay:hover {
+.hover-delay-container:hover .hover-delay {
     opacity: 1;
-    transition: opacity 0.1s ease-in-out 0.4s; /* 0.5s transition with 3s delay */
+    transition: opacity 0.1s ease-in-out 0.4s;
 }
 
-.hover-drag  {
-    opacity: 0;
+.hover-delay-container {
+    position: relative;
 }
-
-.hover-drag:hover  {
-    opacity: 1;
-}
-
-
-
 
 .fade-out::after {
     content: "";
     position: absolute;
     right: 0px;
-    width: 10px;
+    width: 40px;
     height: 100%; /* Adjust this to control the fade-out height */
-    background: linear-gradient(to right, transparent, rgb(0, 0, 0)); /* Adjust white to match your background */
+    background: linear-gradient(to right, transparent, #000000); /* Adjust white to match your background */
     pointer-events: none;
 }

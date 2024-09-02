@@ -1,5 +1,4 @@
 import { selectedNoteAtom } from "@/store";
-import { formatRelativeDateTimeFromMs } from "@renderer/utils";
 import { useAtomValue } from "jotai";
 //?import { NotePreviewProps } from "./NotePreview";
 
@@ -8,10 +7,12 @@ export const NoteTitle = () => {
     
     if (!selectedNote) return null
     
-    const date = formatRelativeDateTimeFromMs(selectedNote.lastEditTime)
+    //const title:HTMLInputElement | null = document.getElementById('note-title');
+    //title?.value = selectedNote.title
 
-    //const editableSpan = document.getElementById('editable');
-
+    function handleChange(e: any) {
+        
+    }
 
     //todo: for changin the title (and not allowing it to be empty)
     /*
@@ -37,12 +38,12 @@ export const NoteTitle = () => {
     });*/
 
 
-    return <div className='px-3 text-3xl transition-colors py-1 duration-75 text-nowrap ' 
-    >
-        <p className="second-text fade-out" >
-            <span id='editable' contentEditable="true" className="first-text underline">{selectedNote.title}</span>
-            {' last saved ' + date + ', with 6699 words'}
-        </p>
-    </div>
-
+    return <input 
+        type="text" 
+        id='note-title' 
+        value={selectedNote.title} 
+        onChange={handleChange} 
+        spellCheck="false" 
+        className="mt-1 mx-3 text-5xl font-bold caret-transparent text-editor w-full">
+    </input>
 }
