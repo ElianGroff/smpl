@@ -16,9 +16,9 @@ export const NotePreview = ({
     const date = formatRelativeDateTimeFromMs(lastEditTime)
 
     return <div className={cn(
-        'hover-delay-container cursor-pointer text-nowrap my-3 w-screen font-light hover:tracking-widest',
+        'hover-delay-container cursor-pointer text-nowrap my-3 w-screen font-light tracking-[.01em]',
         {
-            'font-bold hover:tracking-normal': isActive,
+            'font-bold tracking-normal': isActive,
             'hover:font-normal hover:tracking-normal': !isActive
         },
         className

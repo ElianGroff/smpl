@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
     #root {
         @apply h-full;
@@ -31,40 +32,41 @@
     .first-text {
         @apply text-white;
     }
+
+    ::-webkit-scrollbar {
+        @apply w-0;
+    }
+    
+    .text-editor {
+        @apply bg-black;
+        @apply outline-none;
+        @apply text-white;
+        @apply selection:bg-gray-800;
+    }
+    
+    .hover-delay {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+    
+    .hover-delay-container:hover .hover-delay {
+        opacity: 1;
+        transition: opacity 0.1s ease-in-out 0.4s;
+    }
+    
+    .hover-delay-container {
+        position: relative;
+    }
+    
+    .fade-out::after {
+        content: "";
+        position: absolute;
+        right: 0px;
+        width: 20px;
+        height: 100%; 
+        background: linear-gradient(to right,  transparent 0%, #000000); 
+        pointer-events: none;
+    }
 }
 
 
-::-webkit-scrollbar {
-    @apply w-0;
-}
-
-.text-editor {
-    @apply bg-black;
-    @apply outline-none;
-    @apply text-white;
-    @apply selection:bg-gray-800;
-}
-
-.hover-delay {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-}
-
-.hover-delay-container:hover .hover-delay {
-    opacity: 1;
-    transition: opacity 0.1s ease-in-out 0.4s;
-}
-
-.hover-delay-container {
-    position: relative;
-}
-
-.fade-out::after {
-    content: "";
-    position: absolute;
-    right: 0px;
-    width: 40px;
-    height: 100%; /* Adjust this to control the fade-out height */
-    background: linear-gradient(to right, transparent, #000000); /* Adjust white to match your background */
-    pointer-events: none;
-}
