@@ -1,4 +1,5 @@
 import { NoteContent, NoteInfo } from "@shared/models";
+import { countWords } from "@shared/utils";
 import { atom } from "jotai";
 import { unwrap } from "jotai/utils";
 
@@ -18,8 +19,9 @@ export const selectedNoteAtomAsync = atom( async (get) => {
     const notes = get(notesAtom)
     const selectedNoteIndex = get(selectedNoteIndexAtom)
 
-    if (selectedNoteIndex === null || !notes) return null
+    if (selectedNoteIndex === null || !notes || notes.length === 0) return null
 
+    console.warn('selectedNoteIndex', selectedNoteIndex, !notes, 'notes', notes)
     const selectedNote = notes[selectedNoteIndex]
 
     const noteContent = await window.context.readNote(selectedNote.title)
@@ -30,18 +32,23 @@ export const selectedNoteAtomAsync = atom( async (get) => {
     }
 })
 
-export const selectedNoteAtom = unwrap(selectedNoteAtomAsync, (prev) => prev ?? {
-    title: '',
-    lastEditTime: Date.now(),
-    content: '',
-})
+export const selectedNoteAtom = unwrap(
+    selectedNoteAtomAsync,
+    (prev) =>
+      prev ?? {
+        title: '',
+        content: '',
+        lastEditTime: Date.now(),
+        wordCount: 0
+      }
+  )
 
-export const createEmptyNoteAtom = atom(null, (get, set) => {
+export const createEmptyNoteAtom = atom(null, async (get, set) => {
     const notes = get(notesAtom)
 
     if (!notes) return
 
-    let title = `new note ${notes.length + 1}`
+    let title = `note ${notes.length + 1}`
 
     while (notes.some((note) => note.title === title)) { 
         title += ' copy'
@@ -50,7 +57,12 @@ export const createEmptyNoteAtom = atom(null, (get, set) => {
     const newNote: NoteInfo = {
         title,
         lastEditTime: new Date().getTime(),
+        wordCount: 0
     }
+
+    const results = await window.context.createNote(title)
+
+    if (!results) return
 
     set(notesAtom, [newNote, ...notes.filter((note) => note.title !== newNote.title)])
 
@@ -58,14 +70,21 @@ export const createEmptyNoteAtom = atom(null, (get, set) => {
 })
 
 export const deleteNoteAtom = atom(null, (get, set) => {
+    console.warn('from deletE: notes')
+    
     const notes = get(notesAtom)
+
+    console.warn('from deletE: notes', notes)
+    
     const selectedNote = get(selectedNoteAtom)
     
+    console.warn('from deletE: selectedNote', selectedNote, 'notes', notes)
+
     if (!selectedNote || !notes) return
 
     const selectedNoteIndex = get(selectedNoteIndexAtom)
-    console.log('index',selectedNoteIndex)
 
+    window.context.deleteNote(selectedNote.title)
     set(notesAtom, notes.filter((note) => note.title !== selectedNote.title))
 
     // If there's no notes left set to null
@@ -84,9 +103,19 @@ export const saveNoteAtom = atom(null, async (get, set, newContent:NoteContent) 
 
     await window.context.writeNote(selectedNote.title, newContent)
 
-    set(notesAtom, notes.map((note) => note.title === selectedNote.title ? {
-        ...note,
-        lastEditTime: Date.now(),
-        content: newContent
-    } : note))
-})
+    set(
+        notesAtom,
+        notes.map((note) => {
+          // this is the note that we want to update
+          if (note.title === selectedNote.title) {
+            return {
+              ...note,
+              lastEditTime: Date.now(),
+              wordCount: countWords(newContent)
+            }
+          }
+    
+          return note
+        })
+      )
+    })

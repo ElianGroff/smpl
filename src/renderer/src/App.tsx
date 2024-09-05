@@ -1,23 +1,25 @@
 import {
   Content,
-  ContentFade,
   DraggableTopBar,
   Hint,
   MarkdownEditor,
+  NoteDetails,
   NotePreviewList,
   NoteTitle
 } from '@/components'
 
 import { notesAtom, selectedNoteIndexAtom } from '@/store'
-import { atom, useAtom, useAtomValue } from 'jotai'
+import { useAtomValue } from 'jotai'
 import { isEmpty } from 'lodash'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 //?export const tipsPanelOnAtom = atom<boolean>(false)
-export const notePreviewListAtom = atom<boolean>(false)
+//?export const notePreviewListAtom = atom<boolean>(false)
 
 const App = () => {
-  const [notePreviewListOn, setNotePreviewListOn] = useAtom(notePreviewListAtom)
+  const [notePreviewListOn, setNotePreviewListOn] = useState(false)
+  const [detailsOn, setDetailsOn] = useState(false)
+  
   const selectedNoteIndex = useAtomValue(selectedNoteIndexAtom)
   const notes = useAtomValue(notesAtom)
 
@@ -30,15 +32,17 @@ const App = () => {
     if (e.altKey) {
       const noteTitle = document.getElementById('note-title')
 
-      if (noteTitle) {
-          noteTitle.blur()
-      }
+      noteTitle?.blur()
 
       setNotePreviewListOn(true)
+    } else if (e.key === 'Escape') {
+      window.close()
     } 
     
-    if (e.key === 'Escape') {
-      window.close()
+    if (e.key === 'a') {
+      setDetailsOn(true)
+    } else if (e.key === 't') {
+      window.context.toggleAlwaysOnTop() 
     }
   }
 
@@ -46,6 +50,9 @@ const App = () => {
     if (e.code === 'AltLeft') {
       setNotePreviewListOn(false)
     } 
+    if (e.key == 'a') {
+      setDetailsOn(false)
+    }  
   }
 
   useEffect(() => {
@@ -65,15 +72,15 @@ const App = () => {
   return (
     <>
       <DraggableTopBar className='h-4'/>
+      {detailsOn && notePreviewListOn && <NoteDetails/>}
       {(selectedNoteIndex === null || isEmpty(notes)) && !notePreviewListOn && <Hint>
-        press alt to view notes
+        press <span className='first-text'>alt</span> to view notes
       </Hint>}
-      {selectedNoteIndex !== null && <Content className='left-3px fixed' ref={contentContainerRef}> 
-        <NoteTitle className='text-5xl mx-2 mt-1 z-30'/>
+      {selectedNoteIndex !== null && <Content className='mx-4 fixed' ref={contentContainerRef}> 
+        <NoteTitle className='text-4xl mt-4 z-30'/>
         <MarkdownEditor/>
       </Content>}
-      {notePreviewListOn && <NotePreviewList onSelect={resetScroll} className='mx-2 text-5xl bg-black z-2 top-0 fixed'/>}
-      <ContentFade/>
+      {notePreviewListOn && <NotePreviewList onSelect={resetScroll} className='mx-4 text-4xl bg-black/60 z-2 top-1 fixed'/>}
     </>
   )
 }

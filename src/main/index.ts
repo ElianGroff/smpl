@@ -1,19 +1,37 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
-import { join } from 'path'
+import fs from 'fs'
+import path, { join } from 'path'
 
-import { CreateNote, DeleteNote, GetNotes, ReadNote, WriteNote } from '@shared/types'
-import icon from '../../resources/icon.png?asset'
-import { getNotes, readNote, writeNote } from './lib'
+import { appDirectoryName, fileEncoding, welcomeNoteContent, welcomeNoteFilename } from '@shared/constants'
+import { CreateNote, DeleteNote, GetNotes, ReadNote, RenameNote, WriteNote } from '@shared/types'
+import { homedir } from 'os'
+import { createNote, deleteNote, getNotes, readNote, renameNote, writeNote } from './lib'
+
+function ensureNoteDir() {
+  const notesPath = path.join(homedir(), appDirectoryName)
+
+  if (!fs.existsSync(notesPath)) {
+      fs.mkdirSync(notesPath)
+
+      const welcomeNotePath = path.join(notesPath, welcomeNoteFilename)
+      fs.writeFileSync(welcomeNotePath, welcomeNoteContent, { encoding: fileEncoding })
+  }
+}
+
 
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
+    width: 800,
+    height: 700,
+    minHeight: 150,
+    minWidth: 260,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon: path.resolve(__dirname, '../../resources/icon.png'),
     center:true,
-    title:'Elnap2',
+    title:'smpl.',
     frame: false,
     visualEffectState: 'active',
     titleBarStyle: 'hidden',
@@ -24,9 +42,12 @@ function createWindow(): void {
     }
   })
 
+  ipcMain.on('toggleAlwaysOnTop', (_) => {
+    mainWindow.setAlwaysOnTop(!mainWindow.isAlwaysOnTop())
+  })
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
-    mainWindow.maximize()
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -58,12 +79,15 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
+  ensureNoteDir()
+
   // IPC test
   ipcMain.handle('getNotes', (_, ...args: Parameters<GetNotes>) => getNotes(...args))
   ipcMain.handle('readNote', (_, ...args: Parameters<ReadNote>) => readNote(...args))
   ipcMain.handle('writeNote', (_, ...args: Parameters<WriteNote>) => writeNote(...args))
   ipcMain.handle('createNote', (_, ...args: Parameters<CreateNote>) => createNote(...args))
   ipcMain.handle('deleteNote', (_, ...args: Parameters<DeleteNote>) => deleteNote(...args))
+  ipcMain.handle('renameNote', (_, ...args: Parameters<RenameNote>) => renameNote(...args))  
 
   createWindow()
 

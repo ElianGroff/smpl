@@ -8,14 +8,14 @@ export const DraggableTopBar = ({ children, className, ...props }: ComponentProp
 }
 
 export const Hint = ({ children, className, ...props }: ComponentProps<'div'>) => {
-  return <div className={twMerge("font-normal bg-black text-5xl mx-2 fixed top-1/2 left-1/2 transform text-nowrap -translate-x-1/2 -translate-y-1/2", className)} {...props}>
+  return <div className={twMerge("font-light bg-black second-text text-4xl mx-2 fixed top-1/2 left-1/2 transform text-nowrap sm:text-lg -translate-x-1/2 -translate-y-1/2", className)} {...props}>
     {children}
   </div>
 }
 
 export const Content = forwardRef<HTMLDivElement, ComponentProps<'main'>>(
     ({ children, className, ...props }, ref) => (
-      <main ref={ref} className={twMerge('overflow-y-scroll overflow-x-hidden h-screen w-screen', className) } {...props}>
+      <main ref={ref} className={twMerge('overflow-y-scroll overflow-x-hidden h-screen', className) } {...props}>
         {children}
       </main>
     )

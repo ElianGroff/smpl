@@ -11,6 +11,7 @@ declare global {
       createNote: CreateNote
       deleteNote: DeleteNote
       renameNote: RenameNote
+      toggleAlwaysOnTop: () => void
     }
   }
 }

@@ -8,7 +8,11 @@ module.exports = {
       'font3': ['Reem Kufi'],
       'iter': ['Iter', 'sans-serif']
     },
-    extend: {}
+    extend: {
+      screens: {
+        'sm' : { 'max' : '400px'}
+      }
+    }
   },
   plugins: [require('@tailwindcss/typography')]
 }
