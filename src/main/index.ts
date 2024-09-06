@@ -23,8 +23,8 @@ function ensureNoteDir() {
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 700,
+    width: 350,
+    height: 264,
     minHeight: 150,
     minWidth: 260,
     show: false,

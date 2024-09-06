@@ -15,6 +15,7 @@ export const NoteTitle = ({ className }) => {
         if (!title || !('value' in title)) return
 
         title.value = selectedNote?.title || ''
+        title.scrollTop = 0
     }, [selectedNote])
 
 
@@ -67,6 +68,7 @@ export const NoteTitle = ({ className }) => {
         id='note-title' 
         onBlur={handleChange} 
         spellCheck="false" 
-        className={twMerge(className, "font-bold caret-transparent text-editor w-full")}>
+        className={twMerge(className, "font-bold w-full right-0 !leading-[1.3] text-editor bg-color")}>
     </input>
 }
+

@@ -9,24 +9,36 @@ import { createEmptyNoteAtom, deleteNoteAtom, selectedNoteIndexAtom } from "@/st
 import { NotePreview } from "./NotePreview";
 import { Hint } from "./SimpleComponents";
 
-const NOTE_PREVIEW_HEIGHT = 52
+const NOTE_PREVIEW_HEIGHT = 44 //! FIX
 
 export type NotePreviewListProps = ComponentProps<'ul'> & {
-    onSelect?: () => void
+    resetScroll?: () => void
 }
 
-export const NotePreviewList = ({ onSelect, className, ...props }: NotePreviewListProps) => {
-    const {notes , selectedNoteIndex, handleNoteSelect} = useNotesList({onSelect})
+export const NotePreviewList = ({ resetScroll, className, ...props }: NotePreviewListProps) => {
+    const {notes , selectedNoteIndex, handleNoteSelect} = useNotesList()
     const setSelectedNoteIndex = useSetAtom(selectedNoteIndexAtom)
     const createEmptyNote = useSetAtom(createEmptyNoteAtom)
     const deleteNote = useSetAtom(deleteNoteAtom)
     
     if (!notes) return null
 
-    useEffect(() => { 
+
+    function scrollIntoViewOne(index:number) {
+        const list = document.getElementById('note-preview-list')
+        if (!list) return    
+        const items = list?.getElementsByTagName('div') //!handle better
+        if (!items) return
+
+        items[index].scrollIntoView({ block: 'nearest', inline: 'start' })
+    }
+
+    useEffect(() => {         
         
+        if (resetScroll) resetScroll()
 
         const list = document.getElementById('note-preview-list')
+
         let notesLength = notes.length
 
         if (list && selectedNoteIndex !== null) {
@@ -35,14 +47,13 @@ export const NotePreviewList = ({ onSelect, className, ...props }: NotePreviewLi
 
         const handleKeyDown = (e: KeyboardEvent) => {
             
-            console.log(e.key, notesLength)
+            console.log(e.key, notesLength) //! get live notes length
             
             if (e.key === 'w') {
                 e.preventDefault()
                 setSelectedNoteIndex((prevIndex:number | null) => {                    
                     if ( !(prevIndex === null || !list) && prevIndex > 0) {
-                        list.scrollTop = list.scrollTop - NOTE_PREVIEW_HEIGHT
-
+                        scrollIntoViewOne(prevIndex - 1)
                         return prevIndex - 1
                     } else {
                         createEmptyNote()
@@ -51,18 +62,18 @@ export const NotePreviewList = ({ onSelect, className, ...props }: NotePreviewLi
                     }  
                 })
             } else if (e.key === 's') {
-                e.preventDefault()
+                e.preventDefault() 
                 setSelectedNoteIndex((prevIndex:number | null) => {
                     if (prevIndex === null || !list ) return prevIndex
 
-                    // If selected note is below the bottom of the list
+                    // If selected note is at the bottom of the list
                     if (prevIndex < notesLength - 1) {
                         //&console.log(list.scrollTop, list.scrollHeight)
-                        list.scrollTop = list.scrollTop + NOTE_PREVIEW_HEIGHT
+                        scrollIntoViewOne(prevIndex + 1)
+                        
                         return prevIndex + 1
                     } else { // Else reset to top of list 
-                        list.scrollTo(0,0)
-                        return 0
+                        return prevIndex
                     } 
                 })
             } else if (e.key === 'd') {
@@ -93,18 +104,20 @@ export const NotePreviewList = ({ onSelect, className, ...props }: NotePreviewLi
     } else {
         return (
             <>
-                <div className="h-16 bg-black fixed top-0 inset-0"/>
-                <ul id="note-preview-list" className={twMerge('overflow-y-scroll overflow-x-hidden h-screen w-screen', className)} {...props}>
+                <div className="h-14 bg-color fixed top-0 inset-0 "/>
+                <div className="fixed inset-0 backdrop-blur-sm bg-zinc-900/60"/>
+                <ul id="note-preview-list" className={twMerge(`overflow-y-scroll overflow-x-hidden`, className)} {...props}>
                     {notes.map((note, index) => <NotePreview key={note.lastEditTime + Math.random()}
                         isActive={index === selectedNoteIndex}
                         onClick={handleNoteSelect(index)}
                         {...note} />
                     )}
-                    <div className="h-[93%]" />
+                    <div className={`h-[calc(100%-44px)]`} />
                 </ul>
             </>
         )
     }
 }
 
-//todo  bg-transparent
+//todo  bg-transparent     NOTE_PREVIEW_HEIGHT * notes.length  Math.floor(NOTE_PREVIEW_HEIGHT * notes.length)
+

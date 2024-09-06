@@ -76,11 +76,11 @@ const App = () => {
       {(selectedNoteIndex === null || isEmpty(notes)) && !notePreviewListOn && <Hint>
         press <span className='first-text'>alt</span> to view notes
       </Hint>}
-      {selectedNoteIndex !== null && <Content className='mx-4 fixed' ref={contentContainerRef}> 
-        <NoteTitle className='text-4xl mt-4 z-30'/>
+      {selectedNoteIndex !== null && <Content className='px-2' ref={contentContainerRef}> 
+        <NoteTitle className='text-3xl box-border	mt-[6px] z-30'/>
         <MarkdownEditor/>
       </Content>}
-      {notePreviewListOn && <NotePreviewList onSelect={resetScroll} className='mx-4 text-4xl bg-black/60 z-2 top-1 fixed'/>}
+      {notePreviewListOn && <NotePreviewList resetScroll={resetScroll} className=' text-3xl z-2 top-0 left-2 right-2 fixed h-screen'/>}
     </>
   )
 }

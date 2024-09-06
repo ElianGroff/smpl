@@ -6,7 +6,6 @@ import {
   markdownShortcutPlugin,
   quotePlugin
 } from '@mdxeditor/editor'
-//!import { addedLines } from '@shared/constants'
   
   export const MarkdownEditor = () => {
     const { editorRef, selectedNote, handleAutoSaving, handleBlur } = useMarkdownEditor()
@@ -14,7 +13,7 @@ import {
     if (!selectedNote) return null
   
     return (
-      <>
+      <div className='h-[calc(100%-70px)] cursor-text' onClick={() => editorRef.current?.focus()}>
         <MDXEditor
           ref={editorRef}
           key={selectedNote.title}
@@ -22,10 +21,12 @@ import {
           onChange={handleAutoSaving}
           onBlur={handleBlur}
           plugins={[headingsPlugin(), listsPlugin(), quotePlugin(), markdownShortcutPlugin()]}
-          contentEditableClassName="!outline-none min-h-[90%] font-font1 font-medium text-white max-w-none text-lg selection:bg-gray-600 prose prose-invert prose-p:my-3 prose-p:leading-relaxed prose-headings:my-4 prose-blockquote:my-4 prose-ul:my-2 prose-li:my-0 prose-code:px-1 prose-code:text-gray-900 prose-code:bg-slate-400 prose-code:before:content-[''] prose-code:after:content-['']" 
+          contentEditableClassName="
+            font-font2 font-normal text-editor text-white max-w-none text-base -mt-2
+            
+            prose prose-invert prose-p:my-3 prose-p:leading-relaxed prose-headings:my-4 prose-blockquote:my-4 prose-ul:my-2 prose-li:my-0 prose-code:px-1 prose-code:text-gray-900 prose-code:bg-slate-400 prose-code:before:content-[''] prose-code:after:content-['']" 
         />
-        <div className='inset-0 h-[60%] cursor-text' onClick={() => editorRef.current?.focus()}/>
-      </>
+      </div>
     )
   }
-  
+ 

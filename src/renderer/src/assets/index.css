@@ -14,7 +14,7 @@
 
         @apply select-none;
         
-        @apply bg-black;
+        @apply bg-zinc-900;
 
         @apply font-font2 antialiased text-white;
 
@@ -33,15 +33,19 @@
         @apply text-white;
     }
 
+    .bg-color {
+        @apply bg-zinc-900;
+    }
+
     ::-webkit-scrollbar {
         @apply w-0;
     }
     
     .text-editor {
-        @apply bg-black;
         @apply outline-none;
         @apply text-white;
         @apply selection:bg-gray-800;
+        @apply caret-gray-300
     }
     
     .fade-out::after {

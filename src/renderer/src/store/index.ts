@@ -21,7 +21,7 @@ export const selectedNoteAtomAsync = atom( async (get) => {
 
     if (selectedNoteIndex === null || !notes || notes.length === 0) return null
 
-    console.warn('selectedNoteIndex', selectedNoteIndex, !notes, 'notes', notes)
+    //&console.warn('selectedNoteIndex', selectedNoteIndex, !notes, 'notes', notes)
     const selectedNote = notes[selectedNoteIndex]
 
     const noteContent = await window.context.readNote(selectedNote.title)
@@ -70,15 +70,15 @@ export const createEmptyNoteAtom = atom(null, async (get, set) => {
 })
 
 export const deleteNoteAtom = atom(null, (get, set) => {
-    console.warn('from deletE: notes')
+    //&console.warn('from deletE: notes')
     
     const notes = get(notesAtom)
 
-    console.warn('from deletE: notes', notes)
+    //&console.warn('from deletE: notes', notes)
     
     const selectedNote = get(selectedNoteAtom)
     
-    console.warn('from deletE: selectedNote', selectedNote, 'notes', notes)
+    //&console.warn('from deletE: selectedNote', selectedNote, 'notes', notes)
 
     if (!selectedNote || !notes) return
 
