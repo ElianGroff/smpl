@@ -3,14 +3,15 @@ module.exports = {
   content: ['./src/renderer/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      'font1': ['Maven Pro'],
-      'font2': ['Roboto'],
-      'font3': ['Reem Kufi'],
-      'iter': ['Iter', 'sans-serif']
+      'maven': ['Maven Pro'],
+      'main': ['Roboto'],
+      'code': ['Courier New']
     },
     extend: {
       screens: {
-        'sm' : { 'max' : '450px'}
+        'sm' : { 'max' : '450px', 'min' : '240px'},
+        'micro' : { 'max' : '240px', 'min' : '126px'},
+        'supermicro' : { 'max' : '126px'}
       }
     }
   },

@@ -25,11 +25,9 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 350,
     height: 264,
-    minHeight: 150,
-    minWidth: 260,
     show: false,
     autoHideMenuBar: true,
-    icon: path.resolve(__dirname, '../../resources/icon.png'),
+    icon: path.resolve(__dirname, '../../resources/icon.ico'),
     center:true,
     title:'smpl.',
     frame: false,
@@ -41,6 +39,9 @@ function createWindow(): void {
       contextIsolation: true
     }
   })
+
+  mainWindow.setResizable(true)
+  mainWindow.setMinimumSize(60, 50)
 
   ipcMain.on('toggleAlwaysOnTop', (_) => {
     mainWindow.setAlwaysOnTop(!mainWindow.isAlwaysOnTop())

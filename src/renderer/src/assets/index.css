@@ -16,7 +16,7 @@
         
         @apply bg-zinc-900;
 
-        @apply font-font2 antialiased text-white;
+        @apply font-main antialiased text-white;
 
         @apply overflow-hidden;
     }
@@ -46,20 +46,6 @@
         @apply text-white;
         @apply selection:bg-gray-800;
         @apply caret-gray-300
-    }
-    
-    .fade-out::after {
-        content: "";
-        position: absolute;
-        right: 0px;
-        width: 20px;
-        height: 100%; 
-        background: linear-gradient(to right,  transparent 0%, #000000); 
-        pointer-events: none;
-    }
-
-    .white-space {
-        white-space: pre-wrap; /* Preserves both spaces and line breaks */
     }
 }
 

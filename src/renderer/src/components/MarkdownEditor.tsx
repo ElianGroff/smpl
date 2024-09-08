@@ -17,16 +17,21 @@ import {
         <MDXEditor
           ref={editorRef}
           key={selectedNote.title}
-          markdown={selectedNote.content + '\n'.repeat(5)}
+          markdown={selectedNote.content}
           onChange={handleAutoSaving}
           onBlur={handleBlur}
           plugins={[headingsPlugin(), listsPlugin(), quotePlugin(), markdownShortcutPlugin()]}
           contentEditableClassName="
-            font-font2 font-normal text-editor text-white max-w-none text-base -mt-2
+            text-editor max-w-none text-base 
             
-            prose prose-invert prose-p:my-3 prose-p:leading-relaxed prose-headings:my-4 prose-blockquote:my-4 prose-ul:my-2 prose-li:my-0 prose-code:px-1 prose-code:text-gray-900 prose-code:bg-slate-400 prose-code:before:content-[''] prose-code:after:content-['']" 
+            supermicro:text-[10px] supermicro:font-light prose-li:supermicro:leading-snug
+            
+            prose prose-invert prose-p:my-0 prose-p:leading-normal prose-headings:my-2 prose-blockquote:my-1 prose-ul:my-0 prose-li:my-0 prose-code:px-1  prose-code:bg-zinc-800 prose-code:font-code prose-code:text-zinc-400 prose-code:before:content-[''] prose-code:after:content-['']" 
         />
       </div>
     )
   }
  
+
+  //tutorial added these:
+  //prose prose-invert prose-p:my-3 prose-p:leading-normal prose-headings:my-4 prose-blockquote:my-4 prose-ul:my-2 prose-li:my-0 prose-code:px-1 prose-code:text-gray-900 prose-code:bg-slate-400 prose-code:before:content-[''] prose-code:after:content-['']" 

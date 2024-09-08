@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: smpl.
+productName: smpl
 directories:
   buildResources: build
 files:

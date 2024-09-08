@@ -20,7 +20,7 @@ export const NoteTitle = ({ className }) => {
 
 
     async function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        console.warn("HANDLING ChANGE")
+        //&console.warn("HANDLING ChANGE")
         let newTitle = event.target.value
 
         if (selectedNote === null || selectedNote.title === newTitle || !notes) return 

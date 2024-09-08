@@ -47,7 +47,7 @@ export const NotePreviewList = ({ resetScroll, className, ...props }: NotePrevie
 
         const handleKeyDown = (e: KeyboardEvent) => {
             
-            console.log(e.key, notesLength) //! get live notes length
+            //console.log(e.key, notesLength) //! get live notes length
             
             if (e.key === 'w') {
                 e.preventDefault()

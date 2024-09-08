@@ -30,10 +30,10 @@ const App = () => {
 
   function handleKeyDown(e:KeyboardEvent) {
     if (e.altKey) {
-      const noteTitle = document.getElementById('note-title')
-
-      noteTitle?.blur()
-
+      
+      // Uh... i do this because the MDXEditor does not have a easy way to blur()
+      document.getElementById('hidden-focus')?.focus();
+      
       setNotePreviewListOn(true)
     } else if (e.key === 'Escape') {
       window.close()
@@ -77,10 +77,11 @@ const App = () => {
         press <span className='first-text'>alt</span> to view notes
       </Hint>}
       {selectedNoteIndex !== null && <Content className='px-2' ref={contentContainerRef}> 
-        <NoteTitle className='text-3xl box-border	mt-[6px] z-30'/>
+        <NoteTitle className='text-3xl box-border	mt-[6px] z-30 supermicro:heading'/>
         <MarkdownEditor/>
       </Content>}
       {notePreviewListOn && <NotePreviewList resetScroll={resetScroll} className=' text-3xl z-2 top-0 left-2 right-2 fixed h-screen'/>}
+      <div id="hidden-focus" tabIndex={-1} className="absolute -top:10000"></div>
     </>
   )
 }

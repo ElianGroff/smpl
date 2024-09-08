@@ -46,7 +46,7 @@ export const NoteDetails = () => {
     const date = formatRelativeDateTimeFromMs(selectedNote.lastEditTime)
     const words = selectedNote.wordCount.toLocaleString(window.context.locale)
 
-    return <span className="z-50 font-light bottom-1 right-2 fixed second-text" >
+    return <span className="z-50 font-light bottom-1 right-2 fixed text-nowrap second-text micro:text-[8px] supermicro:text-[0px]" >
         edited {words} {`word${selectedNote.wordCount === 1 ? '' : 's'}`} {date}.
     </span>
 }  
