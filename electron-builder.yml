@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.leon.smpl
 productName: smpl
 directories:
   buildResources: build
@@ -40,4 +40,4 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://example.com/auto-updates
+  url: https://github.com/ElianGroff/smpl

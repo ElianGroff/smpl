@@ -2,51 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    #root {
-        @apply h-full;
-    }
+  #root {
+    @apply h-full;
+  }
 
-    html,
-    body {
-        @apply h-full;
+  html,
+  body {
+    @apply h-full;
 
-        @apply select-none;
-        
-        @apply bg-zinc-900;
+    @apply select-none;
 
-        @apply font-main antialiased text-white;
+    @apply bg-zinc-900;
 
-        @apply overflow-hidden;
-    }
+    @apply font-main antialiased text-white;
 
-    #draggable-header {
-        -webkit-app-region: drag;
-    }
+    @apply overflow-hidden;
+  }
 
-    .second-text {
-        @apply text-gray-400;
-    }
-    
-    .first-text {
-        @apply text-white;
-    }
+  #draggable-header {
+    -webkit-app-region: drag;
+  }
 
-    .bg-color {
-        @apply bg-zinc-900;
-    }
+  .second-text {
+    @apply text-zinc-400;
+  }
 
-    ::-webkit-scrollbar {
-        @apply w-0;
-    }
-    
-    .text-editor {
-        @apply outline-none;
-        @apply text-white;
-        @apply selection:bg-gray-800;
-        @apply caret-gray-300
-    }
+  .first-text {
+    @apply text-white;
+  }
+
+  .bg-color {
+    @apply bg-zinc-900;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-0;
+  }
+
+  .text-editor {
+    @apply outline-none;
+    @apply text-white;
+    @apply selection:bg-gray-800;
+    @apply caret-gray-300;
+  }
 }
-
-

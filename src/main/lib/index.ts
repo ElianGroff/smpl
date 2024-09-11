@@ -2,12 +2,9 @@ import { appDirectoryName, fileEncoding } from '@shared/constants'
 import { NoteInfo } from '@shared/models'
 import { CreateNote, DeleteNote, GetNotes, ReadNote, RenameNote, WriteNote } from '@shared/types'
 import { countWords } from '@shared/utils'
-import fs from 'fs'
-import { ensureDir, readFile, readdir, remove, stat, writeFile } from 'fs-extra'
+import fse, { ensureDir, readFile, readdir, remove, stat, writeFile } from 'fs-extra'
 import { homedir } from 'os'
 import path from 'path'
-
-
 
 export const getNotes: GetNotes = async () => {
   const rootDir = path.join(homedir(), appDirectoryName)
@@ -15,8 +12,8 @@ export const getNotes: GetNotes = async () => {
   await ensureDir(rootDir)
 
   const notesFileNames = await readdir(rootDir, {
-      encoding: fileEncoding,
-      withFileTypes: false
+    encoding: fileEncoding,
+    withFileTypes: false
   })
 
   const notes = notesFileNames.filter((fileName) => fileName.endsWith('.md'))
@@ -24,37 +21,34 @@ export const getNotes: GetNotes = async () => {
   return Promise.all(notes.map(getNoteInfoFromFilename))
 }
 
-
-export const getNoteInfoFromFilename = async(filename: string):Promise<NoteInfo> => {
+export const getNoteInfoFromFilename = async (filename: string): Promise<NoteInfo> => {
   const rootDir = path.join(homedir(), appDirectoryName)
 
   const fileStats = await stat(`${rootDir}/${filename}`)
   const content = await readFile(`${rootDir}/${filename}`, { encoding: fileEncoding })
 
   return {
-      title: filename.replace(/\.md$/, ''),
-      lastEditTime: fileStats.mtimeMs,
-      wordCount: countWords(content)
+    title: filename.replace(/\.md$/, ''),
+    lastEditTime: fileStats.mtimeMs,
+    wordCount: countWords(content)
   }
 }
 
-
-export const readNote:ReadNote = async (filename) => {
+export const readNote: ReadNote = async (filename) => {
   const rootDir = path.join(homedir(), appDirectoryName)
 
   return readFile(`${rootDir}/${filename}.md`, { encoding: fileEncoding })
 }
 
-
-export const renameNote:RenameNote = async (oldName, newName) => {
+export const renameNote: RenameNote = async (oldName, newName) => {
   const rootDir = path.join(homedir(), appDirectoryName)
 
   const oldPath = `${rootDir}/${oldName}.md`
   const newPath = `${rootDir}/${newName}.md`
 
-  fs.rename(oldPath, newPath, (error) => {
+  fse.rename(oldPath, newPath, (error) => {
     if (error) {
-      console.error("Failed to rename note:", error)
+      console.error('Failed to rename note:', error)
       return false
     }
 
@@ -63,8 +57,7 @@ export const renameNote:RenameNote = async (oldName, newName) => {
   })
 }
 
-
-export const writeNote:WriteNote = async (filename, content) => {
+export const writeNote: WriteNote = async (filename, content) => {
   const rootDir = path.join(homedir(), appDirectoryName)
   const filePath = `${rootDir}/${filename}.md`
 
@@ -72,11 +65,10 @@ export const writeNote:WriteNote = async (filename, content) => {
   return writeFile(filePath, content, { encoding: fileEncoding })
 }
 
-
 export const createNote: CreateNote = async (filename) => {
   const rootDir = path.join(homedir(), appDirectoryName)
   const filePath = `${rootDir}/${filename}.md`
-    
+
   try {
     await writeFile(filePath, '')
 
@@ -84,12 +76,11 @@ export const createNote: CreateNote = async (filename) => {
 
     return true
   } catch (error) {
-    
-    console.error("Failed to create note:", error)
+    console.error('Failed to create note:', error)
     return false
   }
 }
-  
+
 export const deleteNote: DeleteNote = async (filename) => {
   const rootDir = path.join(homedir(), appDirectoryName)
   const filePath = `${rootDir}/${filename}.md`
@@ -101,10 +92,7 @@ export const deleteNote: DeleteNote = async (filename) => {
 
     return true
   } catch (error) {
-    
-    console.error("Failed to delete note:", filePath, error)
+    console.error('Failed to delete note:', filePath, error)
     return false
   }
 }
-
-  
