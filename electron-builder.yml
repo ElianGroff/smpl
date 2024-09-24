@@ -13,6 +13,7 @@ asarUnpack:
   - resources/**
 win:
   executableName: smpl
+  icon: resources/icons/win/icon.ico
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
